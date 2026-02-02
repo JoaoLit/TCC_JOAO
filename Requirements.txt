@@ -1,8 +1,8 @@
-streamlit
-pandas
-numpy
-scipy==1.11.4
-plotly
-openpyxl
-langchain
-langchain-openai
+streamlit==1.31.0
+pandas==2.2.0
+numpy==1.26.4
+scipy==1.12.0
+plotly==5.18.0
+openpyxl==3.1.2
+langchain==0.1.0
+langchain-openai==0.0.2
