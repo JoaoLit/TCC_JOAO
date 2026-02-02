@@ -1,0 +1,8 @@
+streamlit
+pandas
+numpy
+scipy==1.11.4
+plotly
+openpyxl
+langchain
+langchain-openai
