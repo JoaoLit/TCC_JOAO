@@ -224,7 +224,40 @@ def calcular_mrp(df, service_level, lead_time):
         lambda x: x['DEMANDA_MEDIA_MENSAL'] * 0.3 if pd.isna(x['DESVIO_PADRAO']) else x['DESVIO_PADRAO'], axis=1
     )
     
-    z_score = stats.norm.ppf(service_level / 100)
+   
+    def calcular_z_score(nivel_servico_percentual):
+        
+        p = nivel_servico_percentual / 100.0
+        
+        if p <= 0 or p >= 1:
+            return 0
+        
+        # Aproximação para a função de distribuição normal inversa
+        # Fórmula de Abramowitz e Stegun, 26.2.23
+        if p < 0.5:
+            # Para p < 0.5, usar a simetria da distribuição
+            p = 1 - p
+            sinal = -1
+        else:
+            sinal = 1
+        
+        t = np.sqrt(-2.0 * np.log(1 - p))
+        
+        c0 = 2.515517
+        c1 = 0.802853
+        c2 = 0.010328
+        d1 = 1.432788
+        d2 = 0.189269
+        d3 = 0.001308
+        
+        z = sinal * (t - ((c0 + c1*t + c2*t*t) / (1 + d1*t + d2*t*t + d3*t*t*t)))
+        
+        return z
+
+    # No seu código, substitua:
+    # z_score = stats.norm.ppf(service_level / 100)
+    # por:
+    z_score = calcular_z_score(nivel_servico)
     lead_time_mes = lead_time / 30
     
     stats_item['ESTOQUE_SEGURANCA'] = (z_score * stats_item['DESVIO_PADRAO'] * np.sqrt(lead_time_mes))
