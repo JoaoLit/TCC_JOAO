@@ -2,6 +2,21 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from scipy import stats
+import plotly
+import plotly.express as px
+import sys
+import subprocess
+import pkg_resources
+
+required = {'plotly', 'pandas', 'streamlit'}
+installed = {pkg.key for pkg in pkg_resources.working_set}
+missing = required - installed
+
+if missing:
+    print(f"Instalando pacotes faltantes: {missing}")
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', *missing])
+
 import plotly.express as px
 
 try:
